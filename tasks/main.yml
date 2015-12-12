@@ -21,7 +21,7 @@
 - name: Edit influxdb config
   template:
     src: influxdb.conf.j2
-    dest: /etc/opt/influxdb/influxdb.conf
+    dest: /etc/influxdb/influxdb.conf
   notify:
     - restart influxdb
 
