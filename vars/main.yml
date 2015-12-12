@@ -1,0 +1,5 @@
+---
+# vars file for ansible-influxdb
+influxdb_collectd_enabled: "true"
+influxdb_collectd_typesdb: "/opt/types.db"
+influxdb_http_auth_enabled: "true"

@@ -1,0 +1,105 @@
+reporting-disabled = {{ influxdb_reporting_disabled }}
+
+[registration]
+  enabled = {{ influxdb_enterprise_server }}
+  url = "{{ influxdb_enterprise_url }}"
+  token = "{{ influxdb_enterprise_token }}"
+
+[meta]
+  dir = "{{ influxdb_meta_dir }}"
+  hostname = "{{ hostname }}"
+  bind-address = "{{ influxdb_bind_address }}"
+  retention-autocreate = {{ influxdb_retention_autocreate }}
+  election-timeout = "{{ influxdb_election_timeout }}"
+  heartbeat-timeout = "{{ influxdb_heartbeat_timeout }}"
+  leader-lease-timeout = "{{ influxdb_leader_lease_timeout }}"
+  commit-timeout = "{{ influxdb_commit_timeout}}"
+  cluster-tracing = {{ influxdb_cluster_tracing }}
+
+[data]
+  dir = "{{ influxdb_data_dir }}"
+  engine = "{{ influxdb_engine }}"
+  max-wal-size = {{ influxdb_max_wal_size }}
+  wal-flush-interval = "{{ influxdb_wal_flush_interval }}"
+  wal-partition-flush-delay = "{{ influxdb_wal_partition_flush_delay }}"
+  wal-dir = "{{ influxdb_wal_dir }}"
+  wal-logging-enabled = {{ influxdb_wal_enable_logging }}
+  wal-ready-series-size = {{ influxdb_wal_read_series_size }}
+  wal-compaction-threshold = {{ influxdb_wal_compaction_treshold }}
+  wal-max-series-size = {{ influxdb_wal_max_series_size }}
+  wal-flush-cold-interval = "{{ influxdb_wal_flush_cold_interval }}"
+  wal-partition-size-threshold = {{ influxdb_wal_partition_size_threshold }}
+
+[cluster]
+  force-remote-mapping = {{ influxdb_cluster_force_remote_mapping }}
+  write-timeout = "{{ influxdb_cluster_write_timeout}}"
+  shard-writer-timeout = "{{ influxdb_cluster_shard_writer_timeout }}"
+  shard-mapper-timeout = "{{ influxdb_cluster_shard_mapper_timeout }}"
+
+[retention]
+  enabled = {{ influxdb_retention_enabled }}
+  check-interval = "{{ influxdb_retention_check_interval }}"
+
+[shard-precreation]
+  enabled = {{ influxdb_shard_precreation_enabled }}
+  check-interval = "{{ influxdb_shard_precreation_check_interval }}"
+  advance-period = "{{ influxdb_shard_precreation_advance_period }}"
+
+[admin]
+  enabled = {{ influxdb_admin_enabled }}
+  bind-address = "{{ influxdb_admin_bind_address }}"
+  https-enabled = {{ influxdb_admin_https_enabled}}
+  https-certificate = "{{ influxdb_admin_https_certificate }}"
+
+[monitor]
+  store-enabled = {{ influxdb_monitor_store_enabled }}
+  store-database = "{{ influxdb_monitor_store_database }}"
+  store-interval = "{{ influxdb_monitor_store_interval }}"
+
+[http]
+  enabled = {{ influxdb_http_enabled }}
+  bind-address = "{{ influxdb_http_bind_address }}"
+  auth-enabled = {{ influxdb_http_auth_enabled }}
+  log-enabled = {{ influxdb_http_log_enabled }}
+  write-tracing = {{ influxdb_http_write_tracing }}
+  pprof-enabled = {{ influxdb_http_pprof_enabled }}
+  https-enabled = {{ influxdb_http_https_enabled }}
+  https-certificate = "{{ influxdb_http_https_certificate }}"
+
+[collectd]
+  enabled = {{ influxdb_collectd_enabled }}
+  bind-address = "{{ influxdb_collectd_bind_address }}"
+  database = "{{ influxdb_collectd_database }}"
+  retention-policy = "{{ influxdb_collectd_retention_policy }}"
+  batch-size = {{ influxdb_collectd_batch_size }}
+  batch-pending = {{ influxdb_collectd_batch_pending }}
+  batch-timeout = "{{ influxdb_collectd_batch_timeout }}"
+  typesdb = "{{ influxdb_collectd_typesdb }}"
+
+[opentsdb]
+  enabled = {{ influxdb_opentsdb_enabled }}
+  bind-address = "{{ influxdb_opentsdb_bind_address }}"
+  database = "{{ influxdb_opentsdb_database }}"
+  retention-policy = "{{ influxdb_opentsdb_retention_policy }}"
+  consistency-level = "{{ influxdb_opentsdb_consistency_level }}"
+  tls-enabled = {{ influxdb_opentsdb_tls_enabled }}
+  certificate = "{{ influxdb_opentsdb_certificate }}"
+  batch-size = {{ influxdb_opentsdb_batch_size }}
+  batch-pending = {{ influxdb_opentsdb_batch_pending }}
+  batch-timeout = "{{ influxdb_opentsdb_batch_timeout}}"
+
+[continuous_queries]
+  log-enabled = {{ influxdb_continuous_queries_log_enabled }}
+  enabled = {{ influxdb_continuous_queries_enabled }}
+  recompute-previous-n = {{ influxdb_continuous_queries_recompute_previous_n }}
+  recompute-no-older-than = "{{ influxdb_continuous_queries_recompute_no_older_than }}"
+  compute-runs-per-interval = {{ influxdb_continuous_queries_compute_runs_per_interval }}
+  compute-no-more-than = "{{ influxdb_continuous_queries_compute_no_more_than }}"
+
+[hinted-handoff]
+  enabled = {{ influxdb_hinted_handoff_enabled }}
+  dir = "{{ influxdb_base_dir }}/hh"
+  max-size = {{ influxdb_hinted_handoff_max_size }}
+  max-age = "{{ influxdb_hinted_handoff_max_age }}"
+  retry-rate-limit = {{ influxdb_hinted_handoff_retry_rate_limit }}
+  retry-interval = "{{ influxdb_hinted_handoff_retry_interval }}"

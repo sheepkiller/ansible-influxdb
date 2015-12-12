@@ -1,0 +1,60 @@
+---
+# tasks file for ansible-influxdb
+
+- name: check EL versions
+  fail: msg="You're OS in not supported"
+  when: ansible_os_family != "RedHat" and ansible_distribution_major_version|int != 7
+
+- name: "Install InfluxDB {{influxdb_version}} for RedHat"
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: "https://s3.amazonaws.com/influxdb/influxdb-{{influxdb_version}}-1.x86_64.rpm"
+    state: installed
+  notify:
+   - restart influxdb
+
+# XXX check if exists first
+- name: Fetch type.db if collectd is support is enabled
+  get_url: "url=https://raw.githubusercontent.com/collectd/collectd/master/src/types.db dest={{ influxdb_collectd_typesdb }}"
+  when: "{{ influxdb_collectd_enabled }} == true"
+
+- name: Edit influxdb config
+  template:
+    src: influxdb.conf.j2
+    dest: /etc/opt/influxdb/influxdb.conf
+  notify:
+    - restart influxdb
+
+- name: Create influxdb layout
+  file:
+    dest: "{{ item }}"
+    state: directory
+    owner: "{{ influxdb_user }}"
+    group: "{{ influxdb_group }}"
+    mode: 0700
+  with_items:
+    - "{{ influxdb_base_dir }}"
+    - "{{ influxdb_meta_dir }}"
+    - "{{ influxdb_data_dir }}"
+    - "{{ influxdb_wal_dir }}"
+    - "{{ influxdb_hinted_handoff_dir }}"
+
+- name: Enable influxdb
+  service: name=influxdb enabled=yes state=started
+
+- name: open firewall
+  firewalld: "rich_rule=' rule family=\"ipv4\" source address=\"{{ item.value.ip }}\" port port=\"8083\" protocol=\"tcp\" accept' permanent=true state=enabled"
+  with_dict: trusted_ips
+
+- name: open firewall
+  firewalld: "rich_rule=' rule family=\"ipv4\" source address=\"{{ item.value.ip }}\" port port=\"8086\" protocol=\"tcp\" accept' permanent=true state=enabled"
+  with_dict: trusted_ips
+
+
+- name: open firewall
+  firewalld: "rich_rule=' rule family=\"ipv4\" source address=\"{{ item.value.ip }}\" port port=\"25826\" protocol=\"tcp\" accept' permanent=true state=enabled"
+  with_dict: trusted_ips
+
+- name: open firewall
+  firewalld: "rich_rule=' rule family=\"ipv4\" source address=\"{{ item.value.ip }}\" port port=\"25826\" protocol=\"udp\" accept' permanent=true state=enabled"
+  with_dict: trusted_ips
